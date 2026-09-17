@@ -1,0 +1,49 @@
+-- 1. Create and use the database
+CREATE DATABASE restaurant;
+USE restaurant;
+
+-- 2. Create the menu table
+CREATE TABLE menu (
+    item_id INT PRIMARY KEY,
+    item_name VARCHAR(50) NOT NULL,
+    category VARCHAR(30) NOT NULL,
+    price DECIMAL(10,2) NOT NULL
+);
+
+-- 3. Create the bills table
+CREATE TABLE bills (
+    bill_id INT PRIMARY KEY,
+    customer_name VARCHAR(50) NOT NULL,
+    table_no INT NOT NULL,
+    bill_date DATE NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+    tax_rate DECIMAL(5,2) NOT NULL,
+    tax_amount DECIMAL(10,2) NOT NULL,
+    total DECIMAL(10,2) NOT NULL,
+    status VARCHAR(15) NOT NULL
+);
+
+-- 4. Create the order_details table
+CREATE TABLE order_details (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    bill_id INT,
+    item_id INT,
+    quantity INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (bill_id) REFERENCES bills(bill_id),
+    FOREIGN KEY (item_id) REFERENCES menu(item_id)
+);
+
+-- 5. Insert sample data into menu
+INSERT INTO menu (item_id, item_name, category, price) VALUES 
+(101, 'Chicken Biriyani', 'Main Course', 180.00),
+(102, 'Veg Biriyani', 'Main Course', 130.00),
+(103, 'Fried Rice', 'Main Course', 140.00),
+(104, 'Chicken 65', 'Starter', 160.00),
+(105, 'Gobi Manchurian', 'Starter', 120.00),
+(106, 'French Fries', 'Snacks', 90.00),
+(107, 'Lime Juice', 'Beverages', 40.00),
+(108, 'Fresh Lime Soda', 'Beverages', 50.00),
+(109, 'Ice Cream', 'Dessert', 70.00),
+(110, 'Chocolate Cake', 'Dessert', 90.00);
