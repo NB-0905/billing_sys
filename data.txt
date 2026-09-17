@@ -1,0 +1,14 @@
+CREATE DATABASE goldbank;
+
+USE goldbank;
+
+CREATE TABLE gold_loan (
+    loan_id INT PRIMARY KEY,
+    customer_name VARCHAR(50),
+    phone VARCHAR(15),
+    gold_weight FLOAT,
+    gold_value FLOAT,
+    loan_amount FLOAT,
+    interest_rate FLOAT,
+    loan_period INT
+);
