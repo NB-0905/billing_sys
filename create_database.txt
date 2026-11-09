@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS order_details (
     order_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     bill_id INT,
     item_id INT,
+    item_name VARCHAR(50) NOT NULL,
     quantity INT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
