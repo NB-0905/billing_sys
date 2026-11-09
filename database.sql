@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `bills`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bills` (
-  `bill_id` int NOT NULL,
+  `bill_id` int NOT NULL AUTO_INCREMENT,
   `customer_name` varchar(50) NOT NULL,
   `table_no` int NOT NULL,
   `bill_date` date NOT NULL,
