@@ -383,6 +383,7 @@ def store_bill(conn, cursor, session):
             (
                 bill_id,
                 item["item_id"],
+                item["name"],
                 item["qty"],
                 item["price"],
                 item["amount"],
@@ -393,8 +394,8 @@ def store_bill(conn, cursor, session):
         cursor.executemany(
             """
             INSERT INTO order_details
-                (bill_id, item_id, quantity, price, amount)
-            VALUES (%s, %s, %s, %s, %s)
+                (bill_id, item_id, item_name, quantity, price, amount)
+            VALUES (%s, %s, %s, %s, %s, %s)
             """,
             order_rows,
         )
@@ -486,10 +487,8 @@ def search_bill(cursor):
 
     cursor.execute(
         """
-        SELECT COALESCE(m.item_name, CONCAT('Item #', o.item_id)),
-               o.quantity, o.price, o.amount
+        SELECT o.item_name, o.quantity, o.price, o.amount
         FROM order_details AS o
-        LEFT JOIN menu AS m ON o.item_id = m.item_id
         WHERE o.bill_id = %s
         ORDER BY o.order_id
         """,
