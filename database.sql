@@ -83,6 +83,7 @@ CREATE TABLE `order_details` (
   `order_id` int NOT NULL AUTO_INCREMENT,
   `bill_id` int DEFAULT NULL,
   `item_id` int DEFAULT NULL,
+  `item_name` varchar(50) NOT NULL,
   `quantity` int NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
@@ -100,7 +101,7 @@ CREATE TABLE `order_details` (
 
 LOCK TABLES `order_details` WRITE;
 /*!40000 ALTER TABLE `order_details` DISABLE KEYS */;
-INSERT INTO `order_details` VALUES (1,1001,101,2,180.00,360.00),(2,1001,107,1,40.00,40.00);
+INSERT INTO `order_details` VALUES (1,1001,101,'Chicken Biriyani',2,180.00,360.00),(2,1001,107,'Lime Juice',1,40.00,40.00);
 /*!40000 ALTER TABLE `order_details` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
