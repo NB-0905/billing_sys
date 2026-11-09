@@ -40,7 +40,7 @@ menu, bills, and order_details. It inserts sample menu items.
 
 ### Existing database from the earlier version
 
-The improved program lets MySQL generate each bill ID automatically. The old schema has a manually assigned bill_id, so run this migration once:
+The improved program lets MySQL generate each bill ID automatically. The previous schema lacks automatic bill IDs and does not preserve the item name on each order line. Run this migration once:
 
 ~~~sql
 USE restaurant;
@@ -50,7 +50,7 @@ ALTER TABLE bills
 
 Alternatively, run migration_auto_bill_id.sql in MySQL Workbench.
 
-This migration does not delete existing bills. MySQL will assign new IDs after the current maximum ID.
+This migration preserves existing bills and order lines. It assigns the current menu name to older order lines, then stores item names separately for future bills so later menu renaming will not change historical receipts.
 
 **Important:** database.sql is a MySQL dump that drops and recreates tables when imported. Do not import it over a database containing bills you need to keep. Use the migration above for an existing database.
 
@@ -93,7 +93,7 @@ python comp_project_class_12.py
 - Currency and tax calculations use Python's Decimal type and round to two decimal places.
 - Cancelling a saved bill changes its status to CANCELLED; it does not delete the bill or its items.
 - Cancelled bills are excluded from turnover reports.
-- A menu item that appears in an old order cannot be deleted because the foreign key protects billing history.
+- Each order line stores the item name and price used at the time of sale, so later menu edits do not rewrite historical bill details. A menu item that appears in an old order cannot be deleted because the foreign key protects billing history.
 - The current unsaved order is held in memory and is lost if the program closes before the bill is stored.
 
 ## Project files
