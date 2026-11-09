@@ -1,18 +1,19 @@
--- 1. Create and use the database
-CREATE DATABASE restaurant;
+-- INITIAL DATABASE SETUP
+-- Run this only when creating the project database for the first time.
+-- For an existing database, use migration_auto_bill_id.sql instead.
+
+CREATE DATABASE IF NOT EXISTS restaurant;
 USE restaurant;
 
--- 2. Create the menu table
-CREATE TABLE menu (
+CREATE TABLE IF NOT EXISTS menu (
     item_id INT PRIMARY KEY,
     item_name VARCHAR(50) NOT NULL,
     category VARCHAR(30) NOT NULL,
     price DECIMAL(10,2) NOT NULL
 );
 
--- 3. Create the bills table
-CREATE TABLE bills (
-    bill_id INT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS bills (
+    bill_id INT NOT NULL AUTO_INCREMENT,
     customer_name VARCHAR(50) NOT NULL,
     table_no INT NOT NULL,
     bill_date DATE NOT NULL,
@@ -20,14 +21,15 @@ CREATE TABLE bills (
     tax_rate DECIMAL(5,2) NOT NULL,
     tax_amount DECIMAL(10,2) NOT NULL,
     total DECIMAL(10,2) NOT NULL,
-    status VARCHAR(15) NOT NULL
+    status VARCHAR(15) NOT NULL,
+    PRIMARY KEY (bill_id)
 );
 
--- 4. Create the order_details table
-CREATE TABLE order_details (
-    order_id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS order_details (
+    order_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     bill_id INT,
     item_id INT,
+    item_name VARCHAR(50) NOT NULL,
     quantity INT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
@@ -35,8 +37,7 @@ CREATE TABLE order_details (
     FOREIGN KEY (item_id) REFERENCES menu(item_id)
 );
 
--- 5. Insert sample data into menu
-INSERT INTO menu (item_id, item_name, category, price) VALUES 
+INSERT IGNORE INTO menu (item_id, item_name, category, price) VALUES
 (101, 'Chicken Biriyani', 'Main Course', 180.00),
 (102, 'Veg Biriyani', 'Main Course', 130.00),
 (103, 'Fried Rice', 'Main Course', 140.00),
